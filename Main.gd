@@ -6,13 +6,19 @@ var score
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	$HUD.show_game_over()
+	$Music.stop()
+	$DeathSound.play()
 
 func new_game():
 	score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-
-
+	$HUD.update_score(score)
+	$HUD.show_message("Get Ready!")
+	# await get_tree().create_timer(1.0).timeout
+	get_tree().call_group("mobs", "queue_free")
+	$Music.play()
 func _on_mob_timer_timeout():
 	# Create a new instance of the Mob scene.
 	var mob = mob_scene.instantiate()
@@ -41,6 +47,7 @@ func _on_mob_timer_timeout():
 
 func _on_score_timer_timeout():
 	score += 1
+	$HUD.update_score(score)
 
 
 func _on_start_timer_timeout():
@@ -49,3 +56,10 @@ func _on_start_timer_timeout():
 	
 func _ready():
 	new_game()
+	
+	
+	
+
+
+func _on_start_button_pressed() -> void:
+	pass # Replace with function body.

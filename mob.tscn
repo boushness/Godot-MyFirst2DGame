@@ -6,20 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ds2h1tv1b87nq" path="res://art/enemySwimming_2.png" id="4_ieysi"]
 [ext_resource type="Texture2D" uid="uid://jrauappqxak1" path="res://art/enemyWalking_1.png" id="5_cixyi"]
 [ext_resource type="Texture2D" uid="uid://cm4m7u1harj8n" path="res://art/enemyWalking_2.png" id="6_7ulmv"]
-
-[sub_resource type="GDScript" id="GDScript_b3mxk"]
-script/source = "extends RigidBody2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
-	$AnimatedSprite2D.animation = mob_types.pick_random()
-
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
-	
-"
+[ext_resource type="Script" uid="uid://desyorh1yo7pd" path="res://mob.gd" id="7_1qmh0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pcqmr"]
 custom_solver_bias = 0.202
@@ -62,10 +49,10 @@ animations = [{
 "speed": 2.5
 }]
 
-[node name="Mob" type="RigidBody2D"]
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
 collision_mask = 0
 gravity_scale = 0.0
-script = SubResource("GDScript_b3mxk")
+script = ExtResource("7_1qmh0")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -73,10 +60,11 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_pcqmr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 7
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_jbnni")
 animation = &"Enemy Flying"
-frame_progress = 0.210966
+frame_progress = 0.648915
 speed_scale = 3.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
